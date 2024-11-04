@@ -18,8 +18,8 @@ async def on_ready():
 async def go(ctx):
     author = ctx.author.name
     if author not in Pokemon.pokemons:
-        sans = random.randint(1, 3)
-        if sans == 1:
+        chance = random.randint(1, 3)
+        if chance == 1:
             pokemon = Pokemon(author)
         elif chance == 2:
             pokemon = Sihirbaz(author)
@@ -37,13 +37,13 @@ async def go(ctx):
         await ctx.send("Zaten bir Pokemon oluşturdunuz.")
 
 @bot.command()
-async def attack(ctx):
+async def saldir(ctx):
     target = ctx.message.mentions[0] if ctx.message.mentions else None
     if target:
         if target.name in Pokemon.pokemons and ctx.author.name in Pokemon.pokemons:
             enemy = Pokemon.pokemons[target.name]
             attacker = Pokemon.pokemons[ctx.author.name]
-            result = await attacker.attack(enemy)
+            result = await attacker.saldir(enemy)
             await ctx.send(result)
         else:
             await ctx.send("Savaşmak için her iki katılımcının da Pokemon'a sahip olması gerekir!")
@@ -51,7 +51,7 @@ async def attack(ctx):
         await ctx.send("Saldırmak istediğiniz kullanıcıyı etiketleyerek belirtin.")
 
 @bot.command()
-async def info(ctx):
+async def bilgi(ctx):
     author = ctx.author.name
     if author in Pokemon.pokemons:
         pokemon = Pokemon.pokemons[author]

@@ -55,7 +55,7 @@ async def info(ctx):
     author = ctx.author.name
     if author in Pokemon.pokemons:
         pokemon = Pokemon.pokemons[author]
-        await ctx.send(await pokemon.info())
+        await ctx.send(await pokemon.bilgi())
     else:
         await ctx.send("Pokémon'un yok!")
 

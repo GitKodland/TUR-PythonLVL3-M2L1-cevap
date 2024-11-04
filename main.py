@@ -12,29 +12,29 @@ bot = commands.Bot(command_prefix='!', intents=intents)
 
 @bot.event
 async def on_ready():
-    print(f'Logged in as {bot.user.name}')
+    print(f'Giriş yapıldı:  {bot.user.name}')
 
 @bot.command()
 async def go(ctx):
     author = ctx.author.name
     if author not in Pokemon.pokemons:
-        chance = random.randint(1, 3)
-        if chance == 1:
+        sans = random.randint(1, 3)
+        if sans == 1:
             pokemon = Pokemon(author)
         elif chance == 2:
-            pokemon = Wizard(author)
+            pokemon = Sihirbaz(author)
         elif chance == 3:
-            pokemon = Fighter(author)
-        await ctx.send(await pokemon.info())
-        image_url = await pokemon.show_img()
+            pokemon = Dovuscu(author)
+        await ctx.send(await pokemon.bilgi())
+        image_url = await pokemon.resmi_goster()
         if image_url:
             embed = discord.Embed()
             embed.set_image(url=image_url)
             await ctx.send(embed=embed)
         else:
-            await ctx.send("Failed to load  Pokémon image.")
+            await ctx.send("Pokemon'un görüntüsü yüklenemedi.")
     else:
-        await ctx.send("You already have a  Pokémon!.")
+        await ctx.send("Zaten bir Pokemon oluşturdunuz.")
 
 @bot.command()
 async def attack(ctx):
@@ -46,9 +46,9 @@ async def attack(ctx):
             result = await attacker.attack(enemy)
             await ctx.send(result)
         else:
-            await ctx.send("Both fighters must have Pokémon for the battle to start!")
+            await ctx.send("Savaşmak için her iki katılımcının da Pokemon'a sahip olması gerekir!")
     else:
-        await ctx.send("Set the user you want to attack by mentioning them.")
+        await ctx.send("Saldırmak istediğiniz kullanıcıyı etiketleyerek belirtin.")
 
 @bot.command()
 async def info(ctx):
@@ -57,6 +57,6 @@ async def info(ctx):
         pokemon = Pokemon.pokemons[author]
         await ctx.send(await pokemon.info())
     else:
-        await ctx.send("You don't have a Pokémon!")
+        await ctx.send("Pokémon'un yok!")
 
 bot.run(token)

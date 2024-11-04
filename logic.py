@@ -3,20 +3,20 @@ import random
 from random import randint
 
 class Pokemon:
-    pokemons = {}
+    pokemonlar = {}
 
-    def __init__(self, pokemon_trainer):
-        self.pokemon_trainer = pokemon_trainer
-        self.pokemon_number = random.randint(1, 1000)
-        self.name = None
+    def __init__(self, pokemon_egitmeni):
+        self.pokemon_egitmeni = pokemon_egitmeni
+        self.pokemon_numarasi = random.randint(1, 1000)
+        self.isim = None
         self.img = None
-        self.power = random.randint(30, 60)
+        self.guc = random.randint(30, 60)
         self.hp = random.randint(200, 400)
-        if pokemon_trainer not in self.pokemons:
-            self.pokemons[pokemon_trainer] = self
+        if pokemon_egitmeni  not in self.pokemonlar:
+            self.pokemonlar[pokemon_egitmeni] = self
 
-    async def get_name(self):
-        url = f'https://pokeapi.co/api/v2/pokemon/{self.pokemon_number}'
+    async def isim_al(self):
+        url = f'https://pokeapi.co/api/v2/pokemon/{self.pokemon_numarasi}'
         async with aiohttp.ClientSession() as session:
             async with session.get(url) as response:
                 if response.status == 200:
@@ -25,56 +25,56 @@ class Pokemon:
                 else:
                     return "Pikachu"
 
-    async def info(self):
-        if not self.name:
-            self.name = await self.get_name()
-        return f"""The name of your Pokémon: {self.name}
-                : {self.power}
-                Здоровье покемона: {self.hp}"""
+    async def bilgi(self):
+        if not self.isim:
+            self.isim = await self.isim_al()
+        return f"""Pokémon'un ismi: {self.isim}
+               Pokémon'un gücü: : {self.guc}
+                  Pokémon'un sağlığı: {self.hp}"""
 
-    async def show_img(self):
-        url = f'https://pokeapi.co/api/v2/pokemon/{self.pokemon_number}'
+    async def resmi_goster(self):
+        url = f'https://pokeapi.co/api/v2/pokemon/{self.pokemon_numarasi}'
         async with aiohttp.ClientSession() as session:
             async with session.get(url) as response:
                 if response.status == 200:
                     data = await response.json()
-                    img_url = data['sprites']['front_default']
-                    return img_url 
+                    resim_url  = data['sprites']['front_default']
+                    return resim_url  
                 else:
                     return None
 
-    async def attack(self, enemy):
-        if isinstance(enemy, Wizard):
-            chance = randint(1, 5)
-            if chance == 1:
-                return "The Wizard Pokémon used a shield during the battle!"
-        if enemy.hp > self.power:
-            enemy.hp -= self.power
-            return f"The Pokémon trainer @{self.pokemon_trainer} attacks @{enemy.pokemon_trainer}\nThe health of @{enemy.pokemon_trainer} now equals {enemy.hp}"
+    async def saldir(self, dusman):
+        if isinstance(enemy, Sihirbaz):
+            sans = randint(1, 5)
+            if sans == 1:
+                return "Sihirbaz Pokémon, savaşta bir kalkan kullandı!"
+        if dusman.hp > self.guc:
+            dusman.hp -= self.guc
+            return f"Pokémon eğitmeni @{self.pokemon_egitmeni} @{dusman.pokemon_egitmeni}'ne saldırdı\n@{dusman.pokemon_egitmeni}'nin sağlık durumu şimdi {dusman.hp}"
         else:
-            enemy.hp = 0
-            return f"The Pokémon trainer @{self.pokemon_trainer} defeated @{enemy.pokemon_trainer}!"
+            dusman.hp = 0
+            return f"Pokémon eğitmeni @{self.pokemon_egitmeni} @{dusman.pokemon_egitmeni}'ni yendi!"
 
-class Wizard(Pokemon):
-    # Wizard specific methods and properties can be added to this class
+class Sihirbaz(Pokemon):
+    # Bu sınıfta, Sihirbaz sınıfına özgü yöntemler ve özellikler ekleyebiliriz
     pass
 
-class Fighter(Pokemon):
-    async def attack(self, enemy):
-        super_power = randint(5, 15)
-        self.power += super_power
-        result = await super().attack(enemy)
-        self.power -= super_power
-        return result + f""
+class Dovuscu(Pokemon):
+    async def saldir(self, dusman):
+        super_guc = randint(5, 15)
+        self.guc += super_guc
+        sonuc = await super().saldir(dusman)
+        self.guc -= super_guc
+        return sonuc + f""
 
-class Wizard(Pokemon):
-    # In this class, we can add methods and properties unique to the Wizard class
+class Sihirbaz(Pokemon):
+    # Bu sınıfta, Sihirbaz sınıfına özgü yöntemler ve özellikler ekleyebiliriz
     pass
 
-class Fighter(Pokemon):
-    async def attack(self, enemy):
-        super_power = randint(5, 15)
-        self.power += super_power
-        result = await super().attack(enemy)
-        self.power -= super_power
-        return result + f"\nThe Fighter Pokémon used a super-attack. The added power is:{super_power}"
+class Dovuscu(Pokemon):
+    async def saldir(self, dusman):
+        super_guc = randint(5, 15)
+        self.guc += super_guc
+        sonuc = await super().saldir(dusman)
+        self.guc -= super_guc
+        return sonuc + f"\nDovuscu Pokémon süper saldırı kullandı. Eklenen guc: {super_guc}"

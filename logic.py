@@ -1,6 +1,7 @@
 import aiohttp
 import random
 from random import randint
+from datetime import datetime
 
 class Pokemon:
     pokemons = {}
@@ -12,7 +13,7 @@ class Pokemon:
         self.img = None
         self.power = random.randint(30, 60)
         self.hp = random.randint(200, 400)
-        self.last_feed_time  = datetime.now()
+        self.last_feed_time = datetime.now()
         if pokemon_trainer not in self.pokemons:
             self.pokemons[pokemon_trainer] = self
 
@@ -40,7 +41,7 @@ class Pokemon:
                 if response.status == 200:
                     data = await response.json()
                     img_url = data['sprites']['front_default']
-                    return img_url 
+                    return img_url
                 else:
                     return None
 
@@ -66,16 +67,4 @@ class Fighter(Pokemon):
         self.power += super_power
         result = await super().attack(enemy)
         self.power -= super_power
-        return result + f""
-
-class Wizard(Pokemon):
-    # Bu sınıfta, Sihirbaz sınıfına özgü yöntemler ve özellikler ekleyebiliriz
-    pass
-
-class Fighter(Pokemon):
-    async def attack(self, enemy):
-        super_power = randint(5, 15)
-        self.power += super_power
-        result = await super().attack(enemy)
-        self.power -= super_power
-        return sonuc + f"\nDovuscu Pokémon süper saldırı kullandı. Eklenen guc: {super_power}"
+        return result + f"\nDövüşçü Pokémon süper saldırı kullandı. Eklenen güç: {super_power}"

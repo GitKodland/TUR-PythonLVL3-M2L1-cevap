@@ -32,7 +32,7 @@ async def go(ctx):
             embed.set_image(url=image_url)
             await ctx.send(embed=embed)
         else:
-            await ctx.send("Pokemon'un görüntüsü yüklenemedi.")
+            await ctx.send("Pokemon görüntüsü yüklenemedi.")
     else:
         await ctx.send("Zaten bir Pokemon oluşturdunuz.")
 
@@ -46,7 +46,7 @@ async def attack(ctx):
             result = await attacker.attack(enemy)
             await ctx.send(result)
         else:
-            await ctx.send("Savaşmak için her iki katılımcının da Pokemon'a sahip olması gerekir!")
+            await ctx.send("Savaşmak için her iki katılımcının da Pokemon sahibi olması gerekir!")
     else:
         await ctx.send("Saldırmak istediğiniz kullanıcıyı etiketleyerek belirtin.")
 
@@ -57,6 +57,6 @@ async def info(ctx):
         pokemon = Pokemon.pokemons[author]
         await ctx.send(await pokemon.info())
     else:
-        await ctx.send("Pokémon'un yok!")
+        await ctx.send("Pokémon sahibi değilsiniz!")
 
 bot.run(token)

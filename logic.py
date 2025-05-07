@@ -30,9 +30,9 @@ class Pokemon:
     async def info(self):
         if not self.name:
             self.name = await self.get_name()
-        return f"""Pokémon'un ismi: {self.name}
-                Pokémon'un gücü: {self.power}
-                Pokémon'un sağlığı: {self.hp}"""
+        return f"""Pokémon ismi: {self.name}
+                Pokémon gücü: {self.power}
+                Pokémon sağlığı: {self.hp}"""
 
     async def show_img(self):
         url = f'https://pokeapi.co/api/v2/pokemon/{self.pokemon_number}'
@@ -58,7 +58,7 @@ class Pokemon:
             return f"Pokémon eğitmeni @{self.pokemon_trainer} @{enemy.pokemon_trainer}'ni yendi!"
 
 class Wizard(Pokemon):
-    # Bu sınıfta, Sihirbaz sınıfına özgü yöntemler ve özellikler ekleyebiliriz
+    # Bu sınıfta, Sihirbaz sınıfına özgü metotlar  ve özellikler ekleyebiliriz
     pass
 
 class Fighter(Pokemon):
